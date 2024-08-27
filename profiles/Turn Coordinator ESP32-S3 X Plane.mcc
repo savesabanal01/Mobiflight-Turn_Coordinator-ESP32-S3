@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MobiflightConnector>
+  <outputs>
+    <config guid="a6b300a4-10b8-456c-a2ea-8fd5c2e78f0c">
+      <active>true</active>
+      <description>Turn Angle</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="XplaneDataRef" path="sim/cockpit2/gauges/indicators/turn_rate_roll_deg_pilot" />
+        <test type="Float" value="1" />
+        <modifiers />
+        <display type="CustomDevice" serial="Turn Coordinator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Turn Coordinator ESP32-S3" messageType="0" value="$" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+    <config guid="416b5b9b-54d6-4a6f-a5a7-26cf505677fa">
+      <active>true</active>
+      <description>Slip Angle</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="XplaneDataRef" path="sim/cockpit2/gauges/indicators/slip_deg" />
+        <test type="Float" value="1" />
+        <modifiers />
+        <display type="CustomDevice" serial="Turn Coordinator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Turn Coordinator ESP32-S3" messageType="1" value="$" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+    <config guid="34380a67-4ba9-43b5-a3f0-f06ee50f7b5a">
+      <active>true</active>
+      <description>Instrument Brightness Ratio</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="XplaneDataRef" path="sim/cockpit2/electrical/instrument_brightness_ratio_manual[1]" />
+        <test type="Float" value="1" />
+        <modifiers />
+        <display type="CustomDevice" serial="Turn Coordinator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Turn Coordinator ESP32-S3" messageType="2" value="$" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+    <config guid="5e1b2ec6-3c56-4c3e-a6bd-5ea9e5bd629d">
+      <active>true</active>
+      <description>Set Screen Rotation</description>
+      <settings msdata:InstanceType="MobiFlight.OutputConfigItem, MFConnector, Version=10.3.0.2, Culture=neutral, PublicKeyToken=null" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <source type="Variable" varType="number" varName="Rotation" varExpression="$" />
+        <test type="Float" value="3" />
+        <modifiers>
+          <transformation active="True" expression="3" />
+        </modifiers>
+        <display type="CustomDevice" serial="Turn Coordinator ESP32-S3/ SN-24587CDE6C94" trigger="normal" customType="" customName="Turn Coordinator ESP32-S3" messageType="100" value="$" />
+        <preconditions />
+        <configrefs />
+      </settings>
+    </config>
+  </outputs>
+  <inputs />
+</MobiflightConnector>

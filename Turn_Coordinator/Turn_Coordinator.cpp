@@ -48,8 +48,8 @@ void Turn_Coordinator::begin()
   TCmainSpr.setSwapBytes(true);
   TCmainSpr.fillSprite(TFT_BLACK);
   TCmainSpr.pushImage(0, 0, 320, 320, tc_main_gauge);
-  slipBallSpr.createSprite(slip_ball_width, slip_ball_height);
 
+  slipBallSpr.createSprite(slip_ball_width, slip_ball_height);
   slipBallSpr.setSwapBytes(false);
   slipBallSpr.fillSprite(TFT_BLACK);
   slipBallSpr.pushImage(0, 0, slip_ball_width, slip_ball_height, slip_ball);
@@ -57,6 +57,7 @@ void Turn_Coordinator::begin()
   slipCtrLnSpr.createSprite(slip_center_line_width, slip_center_line_height);
   slipCtrLnSpr.setSwapBytes(false);
   slipCtrLnSpr.fillSprite(TFT_BLACK);
+  slipCtrLnSpr.pushImage(0, 0, slip_center_line_width, slip_center_line_height, slip_center_line);
 
   TCPlaneSpr.createSprite(tc_plane_width, tc_plane_height);
   TCPlaneSpr.setSwapBytes(true);
@@ -98,14 +99,12 @@ void Turn_Coordinator::set(int16_t messageID, char *setPoint)
     case -1:
         // // tbd., get's called when Mobiflight shuts down
         setPowerSaveMode(true);
-        break;
     case -2:
         // // tbd., get's called when PowerSavingMode is entered
         if (data == 1)
             setPowerSaveMode(true);
         else if (data == 0)
             setPowerSaveMode(false);
-        break;
     case 0:
         // output = (uint16_t)data;
         // data   = output;
@@ -151,8 +150,6 @@ void Turn_Coordinator::update()
 void Turn_Coordinator::drawGauge()
 {
 
-  startTime = millis();
-
   TCmainSpr.setPivot(160, 160);
   TCmainSpr.pushImage(0, 0, 320, 320, tc_main_gauge);
 
@@ -160,16 +157,11 @@ void Turn_Coordinator::drawGauge()
   ballYPos = cos((scaleValue(slipAngle / 2, 8, -8, -116, -244) - (-180)) * DEG_TO_RAD) * 36 + 153; // Approximation based on trial and error
   slipBallSpr.pushToSprite(&TCmainSpr, ballXPos, ballYPos, TFT_BLACK);
 
-  slipCtrLnSpr.pushImage(0, 0, slip_center_line_width, slip_center_line_height, slip_center_line);
   slipCtrLnSpr.pushToSprite(&TCmainSpr, 144, 190, TFT_BLACK);
 
   TCPlaneSpr.pushRotated(&TCmainSpr, turnAngle, TFT_BLACK);
 
-  TCmainSpr.pushSprite(80, 0, TFT_BLACK);
-
-  endTime = millis();
-  Serial.println(1000 / (endTime - startTime));
-
+  TCmainSpr.pushSprite(80, 0);
 
 }
 

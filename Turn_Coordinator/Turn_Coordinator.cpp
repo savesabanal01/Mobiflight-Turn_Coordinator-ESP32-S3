@@ -130,8 +130,20 @@ void Turn_Coordinator::set(int16_t messageID, char *setPoint)
 void Turn_Coordinator::update()
 {
     // Do something which is required regulary
-  if(!powerSaveFlag)
-  {
+//   if(!powerSaveFlag)
+//   {
+
+//     analogWrite(TFT_BL, instrumentBrightness);
+
+//     if(prevScreenRotation != screenRotation)
+//     {
+//         tft.setRotation(screenRotation);
+//         prevScreenRotation = screenRotation;
+//     }
+//     drawGauge();
+
+//    }
+//    else digitalWrite(TFT_BL, LOW);
 
     analogWrite(TFT_BL, instrumentBrightness);
 
@@ -141,9 +153,6 @@ void Turn_Coordinator::update()
         prevScreenRotation = screenRotation;
     }
     drawGauge();
-
-   }
-   else digitalWrite(TFT_BL, LOW);
 
 }
 

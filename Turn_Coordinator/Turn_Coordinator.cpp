@@ -36,13 +36,13 @@ void Turn_Coordinator::begin()
 
   Serial.begin(115200);
   tft.begin();
-  tft.setRotation(3);
+  tft.setRotation(screenRotation);
   tft.fillScreen(PANEL_COLOR);
   tft.setPivot(320, 160);
   tft.setSwapBytes(true);
   tft.pushImage(160, 80, 160, 160, logo);
   delay(3000);
-  tft.fillScreen(TFT_BLACK);
+
 
   TCmainSpr.createSprite(320, 320);
   TCmainSpr.setSwapBytes(true);
@@ -64,6 +64,8 @@ void Turn_Coordinator::begin()
   TCPlaneSpr.fillSprite(TFT_BLACK);
   TCPlaneSpr.pushImage(0, 0, tc_plane_width, tc_plane_height, tc_plane);
   TCPlaneSpr.setPivot(tc_plane_width / 2, 36);
+  tft.fillScreen(TFT_BLACK);
+  digitalWrite(TFT_BL, LOW);
 
 }
 
@@ -99,12 +101,11 @@ void Turn_Coordinator::set(int16_t messageID, char *setPoint)
     case -1:
         // // tbd., get's called when Mobiflight shuts down
         setPowerSaveMode(true);
+        break;
     case -2:
         // // tbd., get's called when PowerSavingMode is entered
-        if (data == 1)
-            setPowerSaveMode(true);
-        else if (data == 0)
-            setPowerSaveMode(false);
+        setPowerSaveMode((bool) atoi(setPoint));
+        break;
     case 0:
         // output = (uint16_t)data;
         // data   = output;
@@ -152,7 +153,19 @@ void Turn_Coordinator::update()
         tft.setRotation(screenRotation);
         prevScreenRotation = screenRotation;
     }
-    drawGauge();
+
+    if (screenRotation == 1 || screenRotation == 3)
+    {
+        tft.setViewport(80, 0, 320, 320, true);
+        drawGauge();
+    }
+    else if (screenRotation == 0 || screenRotation == 2)
+    {
+        tft.setViewport(0, 80, 320, 320, true);
+        drawGauge();
+
+    }
+
 
 }
 
@@ -170,7 +183,8 @@ void Turn_Coordinator::drawGauge()
 
   TCPlaneSpr.pushRotated(&TCmainSpr, turnAngle, TFT_BLACK);
 
-  TCmainSpr.pushSprite(80, 0);
+  TCmainSpr.pushSprite(0, 0);
+  TCmainSpr.fillSprite(TFT_BLACK);
 
 }
 
@@ -193,7 +207,7 @@ void Turn_Coordinator::setSlipAngle(double value)
 
 void Turn_Coordinator::setScreenRotation(int rotation)
 {
-  if(rotation == 1 || rotation == 3)
+  if (rotation >= 0 || rotation <= 3)
     screenRotation = rotation;
 }
 
@@ -202,6 +216,7 @@ void Turn_Coordinator::setPowerSaveMode(bool enabled)
     if(enabled)
     {
         digitalWrite(TFT_BL, LOW);
+        tft.fillScreen(TFT_BLACK);
         powerSaveFlag = true;
     }
     else

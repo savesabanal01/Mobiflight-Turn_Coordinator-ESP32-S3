@@ -207,7 +207,7 @@ void Turn_Coordinator::setSlipAngle(double value)
 
 void Turn_Coordinator::setScreenRotation(int rotation)
 {
-  if (rotation >= 0 || rotation <= 3)
+  if (rotation >= 0 && rotation <= 3)
     screenRotation = rotation;
 }
 
